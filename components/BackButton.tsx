@@ -6,7 +6,13 @@ import { CaretLeft } from "phosphor-react-native";
 import { verticalScale } from "@/utils/style";
 import { colors, radius } from "@/constants/Colors";
 
-const BackButton = ({ style, iconSize = 26 }: BackButtonProps) => {
+const BackButton = ({
+  style,
+  iconSize = 26,
+  icon = (
+    <CaretLeft size={verticalScale(iconSize)} color="#fff" weight="bold" />
+  ),
+}: BackButtonProps) => {
   const router = useRouter();
 
   return (
@@ -14,7 +20,7 @@ const BackButton = ({ style, iconSize = 26 }: BackButtonProps) => {
       onPress={() => router.back()}
       style={[styles.button, style]}
     >
-      <CaretLeft size={verticalScale(iconSize)} color="#fff" weight="bold" />
+      {icon}
     </TouchableOpacity>
   );
 };
