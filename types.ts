@@ -33,6 +33,7 @@ export type TypoProps = {
   children: any | null;
   style?: TextStyle;
   textProps?: TextProps;
+  fontFamily?: TextStyle["fontFamily"];
 };
 
 export type IconComponent = React.ComponentType<{

@@ -1,4 +1,5 @@
 import { colors } from "@/constants/Colors";
+import { fonts } from "@/constants/Fonts";
 import { AuthProvider } from "@/context/authContext";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -12,7 +13,12 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    [fonts.NotoSans]: require("@/assets/fonts/NotoSans-Regular.ttf"),
+    [fonts.NotoSansMedium]: require("@/assets/fonts/NotoSans-Medium.ttf"),
+    [fonts.NotoSansSemiBold]: require("@/assets/fonts/NotoSans-SemiBold.ttf"),
+    [fonts.NotoSansBold]: require("@/assets/fonts/NotoSans-Bold.ttf"),
+    [fonts.NotoSansExtraBold]: require("@/assets/fonts/NotoSans-ExtraBold.ttf"),
+    [fonts.NotoSansBlack]: require("@/assets/fonts/NotoSans-Black.ttf"),
   });
 
   useEffect(() => {

@@ -4,10 +4,13 @@ import { TypoProps } from "@/types";
 import { colors } from "@/constants/Colors";
 import { verticalScale } from "@/utils/style";
 
+import { fonts } from "@/constants/Fonts";
+
 const Typography = ({
   size,
-  color = colors.text,
+  color = colors.neutral700,
   fontWeight = "400",
+  fontFamily = fonts.NotoSans,
   children,
   style,
   textProps = {},
@@ -16,6 +19,7 @@ const Typography = ({
     fontSize: size ? verticalScale(size) : verticalScale(18),
     color,
     fontWeight,
+    fontFamily,
   };
 
   return (
