@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781171996787",
+    "project_id": "uang-bijak-cac14",
+    "storage_bucket": "uang-bijak-cac14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781171996787:android:a2bd23a4f6cb27a03bd206",
+        "android_client_info": {
+          "package_name": "com.udeans.uangbijakv2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL1n0A0G0w0LXMAdpBBiPs05gtLmsSUEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
