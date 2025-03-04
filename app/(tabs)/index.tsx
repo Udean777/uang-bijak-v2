@@ -17,7 +17,7 @@ const Page = () => {
         <View style={styles.header}>
           <View style={{ gap: 4 }}>
             <Typography size={16} color={colors.neutral800}>
-              {getGreeting()}
+              {getGreeting()},
             </Typography>
 
             <Typography

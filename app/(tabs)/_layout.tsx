@@ -20,9 +20,9 @@ export default function TabLayout() {
       screenOptions={{ headerShown: false }}
     >
       <Tabs.Screen name="index" />
-      <Tabs.Screen name="transactions" />
+      <Tabs.Screen name="statistics" />
       <Tabs.Screen name="add_transactions" />
-      <Tabs.Screen name="budget" />
+      <Tabs.Screen name="wallet" />
       <Tabs.Screen name="profile" />
     </Tabs>
   );

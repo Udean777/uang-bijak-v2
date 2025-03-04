@@ -1,82 +1,109 @@
-import {
-  View,
-  StyleSheet,
-  Alert,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Alert, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "@/context/authContext";
+import { WalletType } from "@/types";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { createOrUpdateWallet, deleteWallet } from "@/services/wallet_service";
 import { colors, spacingX, spacingY } from "@/constants/Colors";
 import { scale, verticalScale } from "@/utils/style";
-import { useAuth } from "@/context/authContext";
-import { UserDataType } from "@/types";
-import { updateUser } from "@/services/userService";
-import { router } from "expo-router";
-import * as ImagePicker from "expo-image-picker";
-import * as Icons from "phosphor-react-native";
 import ModalWrapper from "@/components/ModalWrapper";
 import CustomHeader from "@/components/CustomHeader";
 import BackButton from "@/components/BackButton";
-import { Image } from "expo-image";
-import { getProfileImage } from "@/services/imageService";
+import * as Icons from "phosphor-react-native";
 import Typography from "@/components/Typography";
 import CustomInput from "@/components/CustomInput";
+import ImageUpload from "@/components/ImageUpload";
 import CustomButton from "@/components/CustomButton";
 import { fonts } from "@/constants/Fonts";
 
 const Modal = () => {
-  const { user, updateUserData } = useAuth();
-  const [userData, setUserData] = useState<UserDataType>({
+  const { user } = useAuth();
+  const [wallet, setWallet] = useState<WalletType>({
     name: "",
     image: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const oldWallet: { name: string; image: string; id: string } =
+    useLocalSearchParams();
 
   useEffect(() => {
-    setUserData({
-      name: user?.username || "",
-      image: user?.image || null,
-    });
-  }, [user]);
+    if (oldWallet.id) {
+      setWallet({
+        name: oldWallet.name,
+        image: oldWallet.image,
+      });
+    }
+  }, []);
 
   const onSubmit = async () => {
-    let { name } = userData;
+    let { name, image } = wallet;
 
     if (!name.trim()) {
-      Alert.alert("User", "Please fill all the field!");
+      Alert.alert("Wallet", "Please fill all the field!");
       return;
     }
 
+    const data: WalletType = {
+      name,
+      image,
+      uid: user?.uid,
+    };
+
+    if (oldWallet.id) data.id = oldWallet.id;
+
     setIsLoading(true);
-    const res = await updateUser(user?.uid as string, userData);
+    const res = await createOrUpdateWallet(data);
     setIsLoading(false);
 
+    // console.log("Result:", res);
+
     if (res.success) {
-      updateUserData(user?.uid as string);
+      //   updatewallet(user?.uid as string);
       router.back();
     } else {
-      Alert.alert("User", res.msg);
+      Alert.alert("Wallet", res.msg);
     }
   };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images", "videos"],
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  const onDeleteWallet = async () => {
+    if (!oldWallet.id) return;
 
-    if (!result.canceled) {
-      setUserData({ ...userData, image: result.assets[0] });
+    setIsLoading(true);
+    const res = await deleteWallet(oldWallet.id);
+    setIsLoading(false);
+
+    if (res.success) {
+      router.back();
+    } else {
+      Alert.alert("Wallet", res.msg);
     }
+  };
+
+  const showDeleteAlert = () => {
+    Alert.alert(
+      "Confirm",
+      "Are you sure you want to delete this wallet? All the data of this wallet will be deleted permanently.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => onDeleteWallet(),
+          style: "destructive",
+        },
+      ]
+    );
   };
 
   return (
     <ModalWrapper>
       <View style={styles.container}>
         <CustomHeader
-          title="Update Profile"
+          title="Buat Dompet"
           leftIcon={
             <BackButton
               icon={
@@ -91,36 +118,42 @@ const Modal = () => {
           contentContainerStyle={styles.form}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.avatarContainer}>
-            <Image
-              style={styles.avatar}
-              source={getProfileImage(userData.image)}
-              contentFit="cover"
-              transition={500}
-            />
-
-            <TouchableOpacity style={styles.editIcon} onPress={pickImage}>
-              <Icons.Pencil
-                size={verticalScale(20)}
-                color={colors.neutral100}
-              />
-            </TouchableOpacity>
-          </View>
-
           <View style={styles.inputContainer}>
-            <Typography color={colors.neutral800}>Username</Typography>
+            <Typography color={colors.neutral800}>Nama Dompet</Typography>
             <CustomInput
-              placeholder="Username"
-              value={userData.name}
-              onChangeText={(value) =>
-                setUserData({ ...userData, name: value })
-              }
+              placeholder="Contoh: Freelance"
+              value={wallet.name}
+              onChangeText={(value) => setWallet({ ...wallet, name: value })}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Typography color={colors.neutral800}>Gambar</Typography>
+            <ImageUpload
+              placeholder="Unggah Gambar"
+              file={wallet.image}
+              onSelect={(file) => setWallet({ ...wallet, image: file })}
+              onClear={() => setWallet({ ...wallet, image: null })}
             />
           </View>
         </ScrollView>
       </View>
 
       <View style={styles.footer}>
+        {oldWallet.id && !isLoading && (
+          <CustomButton
+            onPress={showDeleteAlert}
+            style={{
+              backgroundColor: colors.rose,
+              paddingHorizontal: spacingX._15,
+            }}
+          >
+            <Icons.Trash
+              color={colors.white}
+              size={verticalScale(24)}
+              weight="bold"
+            />
+          </CustomButton>
+        )}
         <CustomButton
           onPress={onSubmit}
           style={{ flex: 1 }}
@@ -128,10 +161,10 @@ const Modal = () => {
         >
           <Typography
             fontFamily={fonts.NotoSansSemiBold}
-            size={17}
             color={colors.neutral100}
+            size={17}
           >
-            Update
+            {oldWallet.id ? "Update Dompet" : "Buat Dompet"}
           </Typography>
         </CustomButton>
       </View>

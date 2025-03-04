@@ -21,7 +21,6 @@ interface CustomTabBarProps extends BottomTabBarProps {
 
 const CustomTabBar: React.FC<CustomTabBarProps> = ({
   state,
-  descriptors,
   navigation,
   isOpen,
   setIsOpen,
@@ -39,14 +38,14 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
 
   const tabBarIcons: any = {
     index: (isFocused: boolean) => (
-      <Icons.House
+      <Icons.HouseSimple
         size={verticalScale(28)}
         weight={isFocused ? "fill" : "regular"}
         color={isFocused ? colors.primary : colors.neutral400}
       />
     ),
-    transactions: (isFocused: boolean) => (
-      <Icons.ArrowsLeftRight
+    statistics: (isFocused: boolean) => (
+      <Icons.ChartBar
         size={verticalScale(28)}
         weight={isFocused ? "fill" : "regular"}
         color={isFocused ? colors.primary : colors.neutral400}
@@ -68,7 +67,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
           style={styles.floatingIcon}
         />
       ),
-    budget: (isFocused: boolean) => (
+    wallet: (isFocused: boolean) => (
       <Icons.Wallet
         size={verticalScale(28)}
         weight={isFocused ? "fill" : "regular"}
