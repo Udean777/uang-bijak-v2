@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { accountOptionType } from "@/types";
 import * as Icons from "phosphor-react-native";

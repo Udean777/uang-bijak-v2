@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { useAuth } from "@/context/authContext";
 import Typography from "@/components/Typography";
 import { colors, spacingX, spacingY } from "@/constants/Colors";
 import { verticalScale } from "@/utils/style";
 import ScreenWrapper from "@/components/ScreenWrapper";
-import * as Icons from "phosphor-react-native";
 import { getGreeting } from "@/utils/common";
 import { fonts } from "@/constants/Fonts";
 
