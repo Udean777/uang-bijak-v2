@@ -18,25 +18,25 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 const accountOptions: accountOptionType[] = [
   {
-    title: "Edit Profile",
+    title: "Edit Profil",
     icon: <Icons.User size={26} color={colors.white} weight="fill" />,
     routeName: "/(modals)/profile_modal",
     bgColor: "#6366f1",
   },
   {
-    title: "Settings",
+    title: "Pengaturan",
     icon: <Icons.GearSix size={26} color={colors.white} weight="fill" />,
     // routeName: "/(modals)/profileModal",
     bgColor: "#059669",
   },
   {
-    title: "Privacy Policy",
+    title: "Kebijakan & Privasi",
     icon: <Icons.Lock size={26} color={colors.white} weight="fill" />,
     // routeName: "/(modals)/profileModal",
     bgColor: colors.neutral600,
   },
   {
-    title: "Logout",
+    title: "Keluar",
     icon: <Icons.Power size={26} color={colors.white} weight="fill" />,
     // routeName: "/(modals)/profileModal",
     bgColor: "#e11d48",

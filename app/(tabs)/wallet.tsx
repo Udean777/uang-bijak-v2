@@ -78,6 +78,7 @@ const Page = () => {
               <WalletListItem item={item} index={index} router={router} />
             )}
             contentContainerStyle={styles.listStyle}
+            estimatedItemSize={100}
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
                 <Icons.Wallet size={50} color={colors.neutral500} />

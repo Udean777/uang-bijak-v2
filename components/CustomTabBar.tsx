@@ -12,11 +12,13 @@ import * as Icons from "phosphor-react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Image } from "expo-image";
 import { UserType } from "@/types";
+import { Router } from "expo-router";
 
 interface CustomTabBarProps extends BottomTabBarProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   user: UserType;
+  router: Router;
 }
 
 const CustomTabBar: React.FC<CustomTabBarProps> = ({
@@ -25,6 +27,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
   isOpen,
   setIsOpen,
   user,
+  router,
 }) => {
   const scaleAnim = useRef(new Animated.Value(0)).current;
 
@@ -95,13 +98,27 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
       >
         <TouchableOpacity
           style={[styles.menuItem, { backgroundColor: colors.green }]}
-          onPress={() => alert("Income")}
+          onPress={() =>
+            router.push({
+              pathname: "/transaction_modal",
+              params: {
+                type: "income",
+              },
+            })
+          }
         >
           <Icons.ArrowDown size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.menuItem, { backgroundColor: colors.rose }]}
-          onPress={() => alert("Expense")}
+          onPress={() =>
+            router.push({
+              pathname: "/transaction_modal",
+              params: {
+                type: "expense",
+              },
+            })
+          }
         >
           <Icons.ArrowUp size={24} color="white" />
         </TouchableOpacity>

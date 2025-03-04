@@ -61,7 +61,10 @@ const WalletListItem = ({
             {item.name}
           </Typography>
           <Typography size={14} color={colors.neutral600}>
-            ${item.amount}
+            {item.amount?.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            })}
           </Typography>
         </View>
 
