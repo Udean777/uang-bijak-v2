@@ -10,7 +10,7 @@ const Typography = ({
   size,
   color = colors.neutral700,
   fontWeight = "400",
-  fontFamily = fonts.NotoSans,
+  fontFamily = fonts.Poppins,
   children,
   style,
   textProps = {},

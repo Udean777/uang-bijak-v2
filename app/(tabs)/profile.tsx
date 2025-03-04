@@ -88,14 +88,14 @@ const Page = () => {
           <View style={styles.nameContainer}>
             <Typography
               size={20}
-              fontFamily={fonts.NotoSansBold}
+              fontFamily={fonts.PoppinsBold}
               color={colors.neutral800}
             >
               {user?.username}
             </Typography>
             <Typography
               size={15}
-              fontFamily={fonts.NotoSans}
+              fontFamily={fonts.Poppins}
               color={colors.neutral800}
             >
               {user?.email}
@@ -124,7 +124,7 @@ const Page = () => {
                 <Typography
                   size={16}
                   style={{ flex: 1 }}
-                  fontFamily={fonts.NotoSansSemiBold}
+                  fontFamily={fonts.PoppinsSemiBold}
                   color={colors.neutral900}
                 >
                   {item.title}

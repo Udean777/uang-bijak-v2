@@ -365,7 +365,7 @@ const Modal = () => {
           loading={isLoading}
         >
           <Typography
-            fontFamily={fonts.NotoSansSemiBold}
+            fontFamily={fonts.PoppinsSemiBold}
             color={colors.neutral100}
             size={17}
           >

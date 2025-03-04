@@ -14,6 +14,7 @@ import Loading from "@/components/Loading";
 import { FlashList } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import WalletListItem from "@/components/WalletListItem";
+import { toRupiah } from "@/utils/common";
 
 const Page = () => {
   const router = useRouter();
@@ -37,14 +38,11 @@ const Page = () => {
         <View style={styles.balanceView}>
           <View style={{ alignItems: "center" }}>
             <Typography
-              size={45}
-              fontFamily={fonts.NotoSans}
+              size={35}
+              fontFamily={fonts.PoppinsBold}
               color={colors.neutral900}
             >
-              {getTotalBalance().toLocaleString("id-ID", {
-                style: "currency",
-                currency: "IDR",
-              })}
+              {toRupiah(getTotalBalance())}
             </Typography>
             <Typography size={16} color={colors.neutral700}>
               Total Saldo
@@ -56,10 +54,10 @@ const Page = () => {
           <View style={styles.flexRow}>
             <Typography
               size={20}
-              fontFamily={fonts.NotoSans}
+              fontFamily={fonts.Poppins}
               color={colors.neutral900}
             >
-              My Wallets
+              Dompet Saya
             </Typography>
             <TouchableOpacity onPress={() => router.push("/wallet_modal")}>
               <Icons.PlusCircle

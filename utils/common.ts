@@ -75,3 +75,10 @@ export const getGreeting = () => {
   if (hour < 18) return "Selamat Sore";
   return "Selamat Malam";
 };
+
+export const toRupiah = (amount: number) => {
+  return amount.toLocaleString("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  });
+};

@@ -1,8 +1,8 @@
 export const fonts = {
-  NotoSans: "NotoSans",
-  NotoSansMedium: "NotoSansMedium",
-  NotoSansSemiBold: "NotoSansSemiBold",
-  NotoSansBold: "NotoSansBold",
-  NotoSansExtraBold: "NotoSansExtraBold",
-  NotoSansBlack: "NotoSansBlack",
+  Poppins: "Poppins",
+  PoppinsMedium: "PoppinsMedium",
+  PoppinsSemiBold: "PoppinsSemiBold",
+  PoppinsBold: "PoppinsBold",
+  PoppinsExtraBold: "PoppinsExtraBold",
+  PoppinsBlack: "PoppinsBlack",
 };

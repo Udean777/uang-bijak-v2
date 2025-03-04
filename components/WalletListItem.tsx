@@ -8,6 +8,7 @@ import { Image } from "expo-image";
 import Typography from "./Typography";
 import * as Icons from "phosphor-react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { toRupiah } from "@/utils/common";
 
 const WalletListItem = ({
   item,
@@ -61,10 +62,7 @@ const WalletListItem = ({
             {item.name}
           </Typography>
           <Typography size={14} color={colors.neutral600}>
-            {item.amount?.toLocaleString("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            })}
+            {toRupiah(item.amount!)}
           </Typography>
         </View>
 

@@ -14,7 +14,7 @@ const CustomHeader = ({ title = "", leftIcon, style }: HeaderProps) => {
           size={22}
           fontWeight={"600"}
           color={colors.neutral900}
-          fontFamily={fonts.NotoSansBold}
+          fontFamily={fonts.PoppinsBold}
           style={{
             textAlign: "center",
             width: leftIcon ? "82%" : "100%",

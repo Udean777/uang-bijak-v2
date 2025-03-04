@@ -13,12 +13,12 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    [fonts.NotoSans]: require("@/assets/fonts/NotoSans-Regular.ttf"),
-    [fonts.NotoSansMedium]: require("@/assets/fonts/NotoSans-Medium.ttf"),
-    [fonts.NotoSansSemiBold]: require("@/assets/fonts/NotoSans-SemiBold.ttf"),
-    [fonts.NotoSansBold]: require("@/assets/fonts/NotoSans-Bold.ttf"),
-    [fonts.NotoSansExtraBold]: require("@/assets/fonts/NotoSans-ExtraBold.ttf"),
-    [fonts.NotoSansBlack]: require("@/assets/fonts/NotoSans-Black.ttf"),
+    [fonts.Poppins]: require("@/assets/fonts/Poppins-Regular.ttf"),
+    [fonts.PoppinsMedium]: require("@/assets/fonts/Poppins-Medium.ttf"),
+    [fonts.PoppinsSemiBold]: require("@/assets/fonts/Poppins-SemiBold.ttf"),
+    [fonts.PoppinsBold]: require("@/assets/fonts/Poppins-Bold.ttf"),
+    [fonts.PoppinsExtraBold]: require("@/assets/fonts/Poppins-ExtraBold.ttf"),
+    [fonts.PoppinsBlack]: require("@/assets/fonts/Poppins-Black.ttf"),
   });
 
   useEffect(() => {
