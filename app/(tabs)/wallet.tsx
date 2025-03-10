@@ -6,7 +6,7 @@ import { WalletType } from "@/types";
 import { orderBy, where } from "firebase/firestore";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { verticalScale } from "@/utils/style";
-import { colors, radius, spacingX, spacingY } from "@/constants/Colors";
+import { colors } from "@/constants/Colors";
 import Typography from "@/components/Typography";
 import * as Icons from "phosphor-react-native";
 import { fonts } from "@/constants/Fonts";
@@ -15,6 +15,7 @@ import { FlashList } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import WalletListItem from "@/components/WalletListItem";
 import { toRupiah } from "@/utils/common";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 const Page = () => {
   const router = useRouter();
@@ -34,36 +35,48 @@ const Page = () => {
 
   return (
     <ScreenWrapper>
-      <View style={styles.container}>
-        <View style={styles.balanceView}>
-          <View style={{ alignItems: "center" }}>
-            <Typography
-              size={35}
-              fontFamily={fonts.PoppinsBold}
-              color={colors.neutral900}
-            >
-              {toRupiah(getTotalBalance())}
-            </Typography>
-            <Typography size={16} color={colors.neutral700}>
-              Total Saldo
-            </Typography>
-          </View>
-        </View>
+      <Animated.View
+        style={styles.container}
+        entering={FadeInDown.duration(500)}
+      >
+        <Animated.View
+          style={styles.balanceCard}
+          entering={FadeInDown.delay(200)}
+        >
+          <Typography
+            size={18}
+            color={colors.neutral600}
+            style={styles.balanceLabel}
+          >
+            Saldo Total
+          </Typography>
+          <Typography
+            size={36}
+            fontFamily={fonts.PoppinsBold}
+            color={colors.neutral900}
+            style={styles.balanceAmount}
+          >
+            {toRupiah(getTotalBalance())}
+          </Typography>
+        </Animated.View>
 
-        <View style={styles.wallets}>
-          <View style={styles.flexRow}>
+        <View style={styles.walletSection}>
+          <View style={styles.sectionHeader}>
             <Typography
               size={20}
-              fontFamily={fonts.Poppins}
+              fontFamily={fonts.PoppinsSemiBold}
               color={colors.neutral900}
             >
               Dompet Saya
             </Typography>
-            <TouchableOpacity onPress={() => router.push("/wallet_modal")}>
+            <TouchableOpacity
+              onPress={() => router.push("/wallet_modal")}
+              style={styles.addButton}
+            >
               <Icons.PlusCircle
                 weight="fill"
                 color={colors.primary}
-                size={verticalScale(33)}
+                size={verticalScale(28)}
               />
             </TouchableOpacity>
           </View>
@@ -75,23 +88,27 @@ const Page = () => {
             renderItem={({ item, index }) => (
               <WalletListItem item={item} index={index} router={router} />
             )}
-            contentContainerStyle={styles.listStyle}
+            contentContainerStyle={styles.listContainer}
             estimatedItemSize={100}
             ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Icons.Wallet size={50} color={colors.neutral500} />
+              <View style={styles.emptyState}>
+                <Icons.Wallet
+                  size={60}
+                  color={colors.neutral400}
+                  weight="light"
+                />
                 <Typography
                   size={16}
-                  color={colors.neutral700}
-                  style={{ marginTop: 10 }}
+                  color={colors.neutral600}
+                  style={styles.emptyStateText}
                 >
-                  Belum ada dompet, buat sekarang!
+                  No wallets yet. Create one now!
                 </Typography>
               </View>
             }
           />
         </View>
-      </View>
+      </Animated.View>
     </ScreenWrapper>
   );
 };
@@ -101,43 +118,55 @@ export default Page;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    backgroundColor: colors.background,
   },
-  balanceView: {
-    height: verticalScale(160),
+  balanceCard: {
     backgroundColor: colors.white,
-    justifyContent: "center",
+    borderRadius: 20,
+    padding: 20,
+    marginHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 20,
+    shadowColor: colors.neutral900,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
     alignItems: "center",
   },
-  flexRow: {
+  balanceLabel: {
+    marginBottom: 5,
+  },
+  balanceAmount: {
+    marginTop: 5,
+  },
+  walletSection: {
+    flex: 1,
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 16,
+    paddingTop: 20,
+  },
+  sectionHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: spacingY._10,
-  },
-  wallets: {
-    flex: 1,
-    backgroundColor: colors.neutral100,
-    borderTopRightRadius: radius._30,
-    borderTopLeftRadius: radius._30,
-    padding: spacingX._20,
-    paddingTop: spacingX._25,
-  },
-  listStyle: {
-    paddingVertical: spacingY._25,
-    paddingTop: spacingY._15,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 40,
+    marginBottom: 15,
   },
   addButton: {
+    padding: 8,
+  },
+  listContainer: {
+    paddingBottom: 20,
+  },
+  emptyState: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 40,
+  },
+  emptyStateText: {
     marginTop: 15,
-    backgroundColor: colors.primary,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: radius._20,
+    textAlign: "center",
   },
 });

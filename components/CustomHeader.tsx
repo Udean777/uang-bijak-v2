@@ -5,7 +5,12 @@ import Typography from "./Typography";
 import { colors } from "@/constants/Colors";
 import { fonts } from "@/constants/Fonts";
 
-const CustomHeader = ({ title = "", leftIcon, style }: HeaderProps) => {
+const CustomHeader = ({
+  title = "",
+  leftIcon,
+  style,
+  titleColor = colors.neutral900,
+}: HeaderProps) => {
   return (
     <View style={[styles.container, style]}>
       {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
@@ -13,7 +18,7 @@ const CustomHeader = ({ title = "", leftIcon, style }: HeaderProps) => {
         <Typography
           size={22}
           fontWeight={"600"}
-          color={colors.neutral900}
+          color={titleColor}
           fontFamily={fonts.PoppinsBold}
           style={{
             textAlign: "center",

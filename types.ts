@@ -57,6 +57,7 @@ export type HeaderProps = {
   style?: ViewStyle;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  titleColor?: string;
 };
 
 export type BackButtonProps = {

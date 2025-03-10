@@ -39,9 +39,9 @@ const ImageUpload = ({
           onPress={pickImage}
           style={[styles.inputContainer, containerStyle && containerStyle]}
         >
-          <Icons.UploadSimple color={colors.neutral800} />
+          <Icons.Link color={colors.primary} />
           {placeholder && (
-            <Typography size={15} color={colors.neutral700}>
+            <Typography size={15} color={colors.primary}>
               {placeholder}
             </Typography>
           )}
@@ -74,15 +74,15 @@ export default ImageUpload;
 const styles = StyleSheet.create({
   inputContainer: {
     height: verticalScale(54),
-    backgroundColor: colors.neutral200,
+    // backgroundColor: colors.neutral200,
     borderRadius: radius._15,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    borderWidth: 1,
-    borderColor: colors.neutral500,
-    borderStyle: "dashed",
+    // borderWidth: 1,
+    // borderColor: colors.neutral500,
+    // borderStyle: "dashed",
   },
   image: {
     height: scale(150),

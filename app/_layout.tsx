@@ -44,7 +44,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
       </Stack>
 
-      <StatusBar backgroundColor={colors.neutral50} barStyle={"dark-content"} />
+      <StatusBar backgroundColor={colors.neutral50} barStyle={"default"} />
     </AuthProvider>
   );
 }

@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -63,6 +64,23 @@ const Modal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [displayAmount, setDisplayAmount] = useState("Rp 0");
+
+  // Currency formatting helper functions
+  const formatRupiah = (value: number): string => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const parseRupiah = (value: string): number => {
+    // Remove 'Rp ', commas, and any non-digit characters
+    const cleaned = value.replace(/[^0-9]/g, "");
+    return cleaned ? parseInt(cleaned, 10) : 0;
+  };
 
   const {
     data: wallets,
@@ -82,17 +100,33 @@ const Modal = () => {
 
   useEffect(() => {
     if (params.id) {
+      const initialAmount = Number(params.amount || 0);
       setTransaction({
         type: params.type || "expense",
-        amount: Number(params.amount || 0),
+        amount: initialAmount,
         description: params.description || "",
         category: params.category,
         date: new Date(params.date || Date.now()),
         walletId: params.walletId || "",
         image: params.image,
       });
+      setDisplayAmount(formatRupiah(initialAmount));
     }
   }, []);
+
+  const handleAmountChange = (value: string) => {
+    // Remove non-numeric characters
+    const numericValue = parseRupiah(value);
+
+    // Update transaction state with numeric value
+    setTransaction({
+      ...transaction,
+      amount: numericValue,
+    });
+
+    // Update display with formatted Rupiah
+    setDisplayAmount(formatRupiah(numericValue));
+  };
 
   const onSubmit = async () => {
     const { type, amount, description, category, date, walletId, image } =
@@ -155,30 +189,60 @@ const Modal = () => {
   };
 
   return (
-    <ModalWrapper>
-      <View style={styles.container}>
-        <CustomHeader
-          title={
-            params.id
-              ? "Update Transaksi"
-              : `Transaksi ${
-                  transaction.type === "income" ? "Pemasukan" : "Pengeluaran"
-                } baru`
-          }
-          leftIcon={
-            <BackButton
-              icon={
-                <Icons.X size={verticalScale(26)} color="#fff" weight="bold" />
-              }
-            />
-          }
-          style={{ marginBottom: spacingY._10 }}
-        />
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor:
+            transaction.type === "expense" ? colors.expense : colors.green,
+        },
+      ]}
+    >
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Icons.ArrowLeft size={18} color={colors.neutral100} weight="bold" />
+        </TouchableOpacity>
 
-        <ScrollView
-          contentContainerStyle={styles.form}
-          showsVerticalScrollIndicator={false}
+        <Typography
+          size={18}
+          color={colors.neutral100}
+          fontFamily={fonts.PoppinsSemiBold}
+          style={styles.headerTitle}
         >
+          {transaction.type === "expense" ? "Pengeluaran" : "Pemasukan"}
+        </Typography>
+      </View>
+
+      {/* Amount */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        // contentContainerStyle={styles.formContainer}
+      >
+        <View style={styles.amountContainer}>
+          <Typography
+            color={colors.neutral100}
+            size={18}
+            fontFamily={fonts.PoppinsSemiBold}
+          >
+            Mau berapa banyak?
+          </Typography>
+
+          <TextInput
+            value={displayAmount}
+            onChangeText={handleAmountChange}
+            multiline
+            style={{
+              marginTop: 10,
+              color: colors.neutral100,
+              fontSize: 64,
+              fontFamily: fonts.PoppinsSemiBold,
+            }}
+          />
+        </View>
+
+        {/* Form */}
+        <View style={styles.formContainer}>
           <View style={styles.inputContainer}>
             <Typography color={colors.neutral800} size={16}>
               Dompet
@@ -282,23 +346,6 @@ const Modal = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Typography color={colors.neutral800} size={16}>
-              Jumlah
-            </Typography>
-            <CustomInput
-              // placeholder="Amount"
-              keyboardType="numeric"
-              value={transaction.amount.toString()}
-              onChangeText={(value) =>
-                setTransaction({
-                  ...transaction,
-                  amount: Number(value.replace(/[^0-9]/g, "")),
-                })
-              }
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
             <View style={styles.flexRow}>
               <Typography color={colors.neutral800} size={16}>
                 Deskripsi
@@ -325,12 +372,6 @@ const Modal = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <View style={styles.flexRow}>
-              <Typography color={colors.neutral800} size={16}>
-                Bukti Pengeluaran
-              </Typography>
-              <Typography color={colors.neutral500}>(tidak wajib)</Typography>
-            </View>
             <ImageUpload
               placeholder="Unggah Foto"
               file={transaction.image}
@@ -340,8 +381,8 @@ const Modal = () => {
               onClear={() => setTransaction({ ...transaction, image: null })}
             />
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
 
       <View style={styles.footer}>
         {oldTransaction.id && !isLoading && (
@@ -373,7 +414,7 @@ const Modal = () => {
           </Typography>
         </CustomButton>
       </View>
-    </ModalWrapper>
+    </View>
   );
 };
 
@@ -382,23 +423,28 @@ export default Modal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: spacingY._20,
+    // paddingHorizontal: spacingY._20,
   },
-  form: {
-    gap: spacingY._20,
-    paddingVertical: spacingY._15,
-    paddingBottom: spacingY._40,
-  },
-  footer: {
-    alignItems: "center",
+  header: {
     flexDirection: "row",
-    justifyContent: "center",
-    paddingHorizontal: spacingX._20,
-    gap: scale(12),
-    paddingTop: spacingY._15,
-    borderTopColor: colors.neutral300,
-    marginBottom: spacingY._15,
-    borderTopWidth: 1,
+    alignItems: "center",
+    padding: spacingX._20,
+  },
+  headerTitle: {
+    textAlign: "center",
+    width: "90%",
+  },
+  amountContainer: {
+    marginTop: spacingY._20,
+    padding: spacingX._20,
+  },
+  formContainer: {
+    // flex: 2,
+    backgroundColor: colors.white,
+    padding: spacingY._20,
+    borderTopRightRadius: 32,
+    borderTopLeftRadius: 32,
+    gap: spacingY._20,
   },
   inputContainer: {
     gap: spacingY._10,
@@ -489,5 +535,18 @@ const styles = StyleSheet.create({
   dropdownIcon: {
     height: verticalScale(30),
     tintColor: colors.neutral700,
+  },
+  footer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: spacingX._20,
+    paddingVertical: spacingX._20,
+    gap: scale(12),
+    paddingTop: spacingY._15,
+    borderTopColor: colors.neutral300,
+    // marginBottom: spacingY._15,
+    borderTopWidth: 1,
+    backgroundColor: colors.neutral100,
   },
 });

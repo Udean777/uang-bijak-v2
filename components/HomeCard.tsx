@@ -46,7 +46,7 @@ const HomeCard = () => {
       >
         <View style={styles.balanceSection}>
           <Typography color={colors.white} size={16} fontFamily={fonts.Poppins}>
-            Total Balance
+            Saldo Total
           </Typography>
           <Typography
             color={colors.white}
@@ -68,7 +68,7 @@ const HomeCard = () => {
                   { backgroundColor: colors.neutral100 + "30" },
                 ]}
               >
-                <Icons.ArrowDown
+                <Icons.ArrowDownRight
                   size={verticalScale(16)}
                   color={colors.neutral100}
                   weight="bold"
@@ -86,6 +86,7 @@ const HomeCard = () => {
               size={18}
               color={colors.white}
               fontFamily={fonts.PoppinsBold}
+              textProps={{ numberOfLines: 1 }}
             >
               {isLoading ? "______" : `${toRupiah(getTotals().income)}`}
             </Typography>
@@ -101,7 +102,7 @@ const HomeCard = () => {
                   { backgroundColor: colors.neutral100 + "30" },
                 ]}
               >
-                <Icons.ArrowUp
+                <Icons.ArrowUpRight
                   size={verticalScale(16)}
                   color={colors.neutral100}
                   weight="bold"
@@ -119,6 +120,7 @@ const HomeCard = () => {
               size={18}
               color={colors.white}
               fontFamily={fonts.PoppinsBold}
+              textProps={{ numberOfLines: 1 }}
             >
               {isLoading ? "______" : `${toRupiah(getTotals().expenses)}`}
             </Typography>
@@ -194,6 +196,11 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: "48%",
+    backgroundColor: colors.neutral100 + "20",
+    padding: 10,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   actionContainer: {
     flexDirection: "row",
