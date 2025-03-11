@@ -29,6 +29,19 @@ const Page = () => {
     orderBy("created", "desc"),
   ]);
 
+  const getTotals = () => {
+    return wallets.reduce(
+      (totals: any, item: WalletType) => {
+        totals.balance = totals.balance + Number(item.amount);
+        totals.income = totals.income + Number(item.totalIncome);
+        totals.expenses = totals.expenses + Number(item.totalExpenses);
+
+        return totals;
+      },
+      { balance: 0, income: 0, expenses: 0 }
+    );
+  };
+
   const getTotalBalance = () => {
     return wallets.reduce((total, item) => total + (item.amount || 0), 0);
   };
@@ -43,23 +56,100 @@ const Page = () => {
           style={styles.balanceCard}
           entering={FadeInDown.delay(200)}
         >
-          <Typography
-            size={18}
-            color={colors.neutral600}
-            style={styles.balanceLabel}
-          >
-            Saldo Total
-          </Typography>
-          <Typography
-            size={36}
-            fontFamily={fonts.PoppinsBold}
-            color={colors.neutral900}
-            style={styles.balanceAmount}
-          >
-            {toRupiah(getTotalBalance())}
-          </Typography>
+          {/* Just some text */}
+          <View style={{ alignSelf: "flex-start" }}>
+            <Typography
+              size={18}
+              color={colors.neutral200}
+              style={styles.balanceLabel}
+            >
+              Total Saldo
+            </Typography>
+            <Typography
+              size={36}
+              fontFamily={fonts.PoppinsBold}
+              color={colors.neutral50}
+              style={styles.balanceAmount}
+            >
+              {toRupiah(getTotalBalance())}
+            </Typography>
+          </View>
+
+          {/* For displaying expense and income */}
+          <View style={styles.statsContainer}>
+            {/* Income */}
+            <View style={styles.statCard}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <View
+                  style={[
+                    styles.statIcon,
+                    { backgroundColor: colors.neutral100 + "30" },
+                  ]}
+                >
+                  <Icons.ArrowDownRight
+                    size={verticalScale(16)}
+                    color={colors.neutral100}
+                    weight="bold"
+                  />
+                </View>
+                <Typography
+                  size={15}
+                  color={colors.white}
+                  fontFamily={fonts.Poppins}
+                >
+                  Pemasukan
+                </Typography>
+              </View>
+              <Typography
+                size={18}
+                color={colors.white}
+                fontFamily={fonts.PoppinsBold}
+                textProps={{ numberOfLines: 1 }}
+              >
+                {isLoading ? "______" : `${toRupiah(getTotals().income)}`}
+              </Typography>
+            </View>
+
+            {/* Expense */}
+            <View style={styles.statCard}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <View
+                  style={[
+                    styles.statIcon,
+                    { backgroundColor: colors.neutral100 + "30" },
+                  ]}
+                >
+                  <Icons.ArrowUpRight
+                    size={verticalScale(16)}
+                    color={colors.neutral100}
+                    weight="bold"
+                  />
+                </View>
+                <Typography
+                  size={15}
+                  color={colors.white}
+                  fontFamily={fonts.Poppins}
+                >
+                  Pengeluaran
+                </Typography>
+              </View>
+              <Typography
+                size={18}
+                color={colors.white}
+                fontFamily={fonts.PoppinsBold}
+                textProps={{ numberOfLines: 1 }}
+              >
+                {isLoading ? "______" : `${toRupiah(getTotals().expenses)}`}
+              </Typography>
+            </View>
+          </View>
         </Animated.View>
 
+        {/* List Item */}
         <View style={styles.walletSection}>
           <View style={styles.sectionHeader}>
             <Typography
@@ -118,27 +208,29 @@ export default Page;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.primary,
   },
   balanceCard: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     borderRadius: 20,
     padding: 20,
-    marginHorizontal: 16,
-    marginTop: 10,
-    marginBottom: 20,
-    shadowColor: colors.neutral900,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
+    // marginHorizontal: 16,
+    // marginTop: 10,
+    // marginBottom: 20,
+    // shadowColor: colors.neutral900,
+    // shadowOffset: { width: 0, height: 4 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 10,
+    // elevation: 5,
     alignItems: "center",
   },
   balanceLabel: {
     marginBottom: 5,
+    fontFamily: fonts.PoppinsSemiBold,
   },
   balanceAmount: {
     marginTop: 5,
+    fontFamily: fonts.PoppinsExtraBold,
   },
   walletSection: {
     flex: 1,
@@ -168,5 +260,24 @@ const styles = StyleSheet.create({
   emptyStateText: {
     marginTop: 15,
     textAlign: "center",
+  },
+  statIcon: {
+    padding: verticalScale(8),
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  statCard: {
+    width: "48%",
+    backgroundColor: colors.neutral100 + "20",
+    padding: 10,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  statsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 10,
   },
 });

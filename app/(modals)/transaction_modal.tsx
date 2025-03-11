@@ -4,7 +4,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -21,9 +20,6 @@ import useFetchData from "@/hooks/useFetchData";
 import { orderBy, where } from "firebase/firestore";
 import { scale, verticalScale } from "@/utils/style";
 import { colors, radius, spacingX, spacingY } from "@/constants/Colors";
-import ModalWrapper from "@/components/ModalWrapper";
-import CustomHeader from "@/components/CustomHeader";
-import BackButton from "@/components/BackButton";
 import * as Icons from "phosphor-react-native";
 import Typography from "@/components/Typography";
 import { Dropdown } from "react-native-element-dropdown";
@@ -33,6 +29,7 @@ import { expenseCategories } from "@/constants/data";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomButton from "@/components/CustomButton";
 import { fonts } from "@/constants/Fonts";
+import { toRupiah } from "@/utils/common";
 
 type paramType = {
   id?: string;
@@ -201,7 +198,7 @@ const Modal = () => {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Icons.ArrowLeft size={18} color={colors.neutral100} weight="bold" />
+          <Icons.ArrowLeft size={25} color={colors.neutral100} weight="bold" />
         </TouchableOpacity>
 
         <Typography
@@ -214,11 +211,11 @@ const Modal = () => {
         </Typography>
       </View>
 
-      {/* Amount */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         // contentContainerStyle={styles.formContainer}
       >
+        {/* For inserting amount */}
         <View style={styles.amountContainer}>
           <Typography
             color={colors.neutral100}
@@ -243,6 +240,7 @@ const Modal = () => {
 
         {/* Form */}
         <View style={styles.formContainer}>
+          {/* For choosing wallet */}
           <View style={styles.inputContainer}>
             <Typography color={colors.neutral800} size={16}>
               Dompet
@@ -254,7 +252,7 @@ const Modal = () => {
               selectedTextStyle={styles.dropdownSelectedText}
               iconStyle={styles.dropdownIcon}
               data={wallets.map((wallet) => ({
-                label: `${wallet.name} ($${wallet.amount})`,
+                label: `${wallet.name} (${toRupiah(wallet.amount!)})`,
                 value: wallet.id,
               }))}
               maxHeight={300}
@@ -271,6 +269,7 @@ const Modal = () => {
             />
           </View>
 
+          {/* For expense categories */}
           {transaction.type === "expense" && (
             <View style={styles.inputContainer}>
               <Typography color={colors.neutral800} size={16}>
@@ -301,6 +300,7 @@ const Modal = () => {
             </View>
           )}
 
+          {/* Clickable for showing datepicker */}
           <View style={styles.inputContainer}>
             <Typography color={colors.neutral800} size={16}>
               Tanggal
@@ -316,6 +316,7 @@ const Modal = () => {
               </Pressable>
             )}
 
+            {/* For showing the date picker */}
             {showDatePicker && (
               <View style={Platform.OS == "ios" && styles.iosDatePicker}>
                 <DateTimePicker
@@ -345,6 +346,7 @@ const Modal = () => {
             )}
           </View>
 
+          {/* For description */}
           <View style={styles.inputContainer}>
             <View style={styles.flexRow}>
               <Typography color={colors.neutral800} size={16}>
@@ -371,6 +373,7 @@ const Modal = () => {
             />
           </View>
 
+          {/* For Image upload */}
           <View style={styles.inputContainer}>
             <ImageUpload
               placeholder="Unggah Foto"
@@ -384,6 +387,7 @@ const Modal = () => {
         </View>
       </ScrollView>
 
+      {/* Footer for displaying submit, or delete and update button */}
       <View style={styles.footer}>
         {oldTransaction.id && !isLoading && (
           <CustomButton

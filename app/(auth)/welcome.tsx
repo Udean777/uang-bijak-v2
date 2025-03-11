@@ -7,6 +7,7 @@ import { verticalScale } from "@/utils/style";
 import CustomButton from "@/components/CustomButton";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
+import { fonts } from "@/constants/Fonts";
 
 const Welcome = () => {
   const router = useRouter();
@@ -19,7 +20,10 @@ const Welcome = () => {
             onPress={() => router.push("/(auth)/login_screen")}
             style={styles.loginButton}
           >
-            <Typography fontWeight={"500"} color={colors.neutral100}>
+            <Typography
+              fontFamily={fonts.PoppinsSemiBold}
+              color={colors.neutral100}
+            >
               Login
             </Typography>
           </TouchableOpacity>
@@ -37,10 +41,18 @@ const Welcome = () => {
             entering={FadeInDown.duration(1000).springify().damping(12)}
             style={{ alignItems: "center" }}
           >
-            <Typography size={30} fontWeight={"800"} color={colors.neutral900}>
+            <Typography
+              size={30}
+              fontFamily={fonts.PoppinsBold}
+              color={colors.neutral900}
+            >
               Take Control of
             </Typography>
-            <Typography size={30} fontWeight={"800"} color={colors.primary}>
+            <Typography
+              size={30}
+              fontFamily={fonts.PoppinsBold}
+              color={colors.primary}
+            >
               Your Finances.
             </Typography>
           </Animated.View>
@@ -52,10 +64,18 @@ const Welcome = () => {
               .damping(12)}
             style={{ alignItems: "center", gap: 2 }}
           >
-            <Typography size={17} color={colors.neutral600}>
+            <Typography
+              size={17}
+              color={colors.neutral600}
+              fontFamily={fonts.PoppinsMedium}
+            >
               Managing your money is the key
             </Typography>
-            <Typography size={17} color={colors.neutral600}>
+            <Typography
+              size={17}
+              color={colors.neutral600}
+              fontFamily={fonts.PoppinsMedium}
+            >
               to financial freedom.
             </Typography>
           </Animated.View>
@@ -70,7 +90,11 @@ const Welcome = () => {
             <CustomButton
               onPress={() => router.push("/(auth)/register_screen")}
             >
-              <Typography size={17} color={colors.white} fontWeight={"600"}>
+              <Typography
+                size={17}
+                color={colors.white}
+                fontFamily={fonts.PoppinsSemiBold}
+              >
                 Get Started
               </Typography>
             </CustomButton>

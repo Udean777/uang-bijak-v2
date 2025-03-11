@@ -76,7 +76,13 @@ const Page = () => {
         />
 
         <View style={styles.userInfo}>
-          <View>
+          <View
+            style={{
+              borderWidth: 3,
+              borderRadius: 100,
+              borderColor: colors.primary,
+            }}
+          >
             <Image
               style={styles.avatar}
               source={getProfileImage(user?.image)}
@@ -165,6 +171,7 @@ const styles = StyleSheet.create({
     height: verticalScale(135),
     width: verticalScale(135),
     borderRadius: 200,
+    margin: 3,
   },
   editIcon: {
     position: "absolute",

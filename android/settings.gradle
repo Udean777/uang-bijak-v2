@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = 'uang-bijak-v2'
+rootProject.name = 'Uang Bijak'
 
 dependencyResolutionManagement {
   versionCatalogs {

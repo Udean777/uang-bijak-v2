@@ -136,7 +136,7 @@ const TransactionItem = ({
             color={colors.neutral500}
             textProps={{ numberOfLines: 1 }}
           >
-            {item.description || "No description."}
+            {item.description || "Tidak ada deskripsi."}
           </Typography>
         </View>
 
@@ -144,6 +144,7 @@ const TransactionItem = ({
           <Typography
             fontFamily={fonts.Poppins}
             color={item.type == "income" ? colors.green : colors.rose}
+            size={15}
           >
             {`${item.type == "income" ? "+ " : "- "}${toRupiah(item.amount)}`}
           </Typography>

@@ -52,7 +52,7 @@ const WalletListItem = ({
             />
           ) : (
             <View style={styles.placeholderIcon}>
-              <Icons.Wallet size={40} color={colors.primary} weight="duotone" />
+              <Icons.Wallet size={40} color={colors.primary} weight="fill" />
             </View>
           )}
         </View>
@@ -92,15 +92,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: colors.neutral50,
+    // backgroundColor: colors.neutral50,
     borderRadius: 15,
     padding: 12,
     marginBottom: verticalScale(12),
-    shadowColor: colors.neutral900,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    // shadowColor: colors.neutral900,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.05,
+    // shadowRadius: 4,
+    // elevation: 2,
   },
   imageContainer: {
     width: verticalScale(50),

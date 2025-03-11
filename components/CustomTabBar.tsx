@@ -59,7 +59,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
         <Icons.XCircle
           size={verticalScale(70)}
           weight="fill"
-          color={colors.primary}
+          color={colors.rose}
           style={styles.floatingIcon}
         />
       ) : (
@@ -91,6 +91,19 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
     ),
   };
 
+  const handleNavigationClick = (type: string) => {
+    if (isOpen) {
+      setIsOpen(false);
+
+      router.push({
+        pathname: "/transaction_modal",
+        params: {
+          type,
+        },
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -98,27 +111,13 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
       >
         <TouchableOpacity
           style={[styles.menuItem, { backgroundColor: colors.green }]}
-          onPress={() =>
-            router.push({
-              pathname: "/transaction_modal",
-              params: {
-                type: "income",
-              },
-            })
-          }
+          onPress={() => handleNavigationClick("income")}
         >
           <Icons.ArrowDown size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.menuItem, { backgroundColor: colors.rose }]}
-          onPress={() =>
-            router.push({
-              pathname: "/transaction_modal",
-              params: {
-                type: "expense",
-              },
-            })
-          }
+          onPress={() => handleNavigationClick("expense")}
         >
           <Icons.ArrowUp size={24} color="white" />
         </TouchableOpacity>
@@ -163,7 +162,7 @@ export default CustomTabBar;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: verticalScale(10),
+    bottom: verticalScale(25),
     width: "92%",
     alignSelf: "center",
     alignItems: "center",
@@ -171,7 +170,7 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: "row",
     height: Platform.OS === "ios" ? verticalScale(70) : verticalScale(60),
-    backgroundColor: "rgba(255, 255, 255, 0.9)", // Semi-transparent effect
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     justifyContent: "space-around",
     alignItems: "center",
     borderRadius: verticalScale(30),
@@ -181,14 +180,14 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     width: "100%",
-    backdropFilter: "blur(10px)", // Glassmorphism effect
+    backdropFilter: "blur(10px)",
   },
   tabBarItem: {
     flex: 1,
     alignItems: "center",
     paddingVertical: verticalScale(8),
     position: "relative",
-    borderRadius: verticalScale(15), // Rounded tab item
+    borderRadius: verticalScale(15),
   },
   floatingIcon: {
     position: "absolute",

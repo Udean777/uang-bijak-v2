@@ -38,6 +38,8 @@ const HomeCard = () => {
     );
   };
 
+  console.log(getTotals().balance);
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -75,18 +77,25 @@ const HomeCard = () => {
                 />
               </View>
               <Typography
-                size={15}
+                size={verticalScale(12)}
                 color={colors.white}
+                textProps={{ numberOfLines: 1 }}
                 fontFamily={fonts.Poppins}
+                style={styles.labelText}
               >
                 Pemasukan
               </Typography>
             </View>
             <Typography
-              size={18}
+              size={verticalScale(18)}
               color={colors.white}
               fontFamily={fonts.PoppinsBold}
-              textProps={{ numberOfLines: 1 }}
+              textProps={{
+                numberOfLines: 1,
+                adjustsFontSizeToFit: true,
+                minimumFontScale: 0.7,
+              }}
+              style={styles.valueText}
             >
               {isLoading ? "______" : `${toRupiah(getTotals().income)}`}
             </Typography>
@@ -109,18 +118,25 @@ const HomeCard = () => {
                 />
               </View>
               <Typography
-                size={15}
+                size={verticalScale(12)}
                 color={colors.white}
+                textProps={{ numberOfLines: 1 }}
                 fontFamily={fonts.Poppins}
+                style={styles.labelText}
               >
                 Pengeluaran
               </Typography>
             </View>
             <Typography
-              size={18}
+              size={verticalScale(18)}
               color={colors.white}
               fontFamily={fonts.PoppinsBold}
-              textProps={{ numberOfLines: 1 }}
+              textProps={{
+                numberOfLines: 1,
+                adjustsFontSizeToFit: true,
+                minimumFontScale: 0.7,
+              }}
+              style={styles.valueText}
             >
               {isLoading ? "______" : `${toRupiah(getTotals().expenses)}`}
             </Typography>
@@ -128,18 +144,7 @@ const HomeCard = () => {
         </View>
       </LinearGradient>
 
-      <View style={styles.actionContainer}>
-        {/* <TouchableOpacity style={styles.actionButton}>
-          <Icons.Plus size={24} color={colors.primary} />
-          <Typography
-            size={12}
-            color={colors.primary}
-            fontFamily={fonts.Poppins}
-            style={styles.actionButtonText}
-          >
-            Add Expense
-          </Typography>
-        </TouchableOpacity> */}
+      {/* <View style={styles.actionContainer}>
 
         <TouchableOpacity
           style={styles.actionButton}
@@ -170,7 +175,7 @@ const HomeCard = () => {
             Dompet
           </Typography>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   gradientBackground: {
-    paddingHorizontal: scale(20),
+    paddingHorizontal: verticalScale(20),
     paddingTop: verticalScale(20),
     paddingBottom: verticalScale(20),
   },
@@ -201,6 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: "3%",
   },
   actionContainer: {
     flexDirection: "row",
@@ -220,5 +226,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
+  },
+  labelText: {
+    flexShrink: 1,
+  },
+  valueText: {
+    width: "100%",
   },
 });
