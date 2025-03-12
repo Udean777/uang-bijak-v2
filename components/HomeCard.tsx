@@ -38,8 +38,6 @@ const HomeCard = () => {
     );
   };
 
-  console.log(getTotals().balance);
-
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -143,39 +141,6 @@ const HomeCard = () => {
           </View>
         </View>
       </LinearGradient>
-
-      {/* <View style={styles.actionContainer}>
-
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => router.push("/(tabs)/statistics")}
-        >
-          <Icons.ChartBar size={24} color={colors.primary} />
-          <Typography
-            size={12}
-            color={colors.primary}
-            fontFamily={fonts.Poppins}
-            style={styles.actionButtonText}
-          >
-            Statistik
-          </Typography>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => router.push("/(tabs)/wallet")}
-        >
-          <Icons.Wallet size={24} color={colors.primary} />
-          <Typography
-            size={12}
-            color={colors.primary}
-            fontFamily={fonts.Poppins}
-            style={styles.actionButtonText}
-          >
-            Dompet
-          </Typography>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };

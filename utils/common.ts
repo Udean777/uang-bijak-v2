@@ -76,7 +76,14 @@ export const getGreeting = () => {
   return "Selamat Malam";
 };
 
-export const toRupiah = (amount: number) => {
+export const toRupiah = (amount: number): string => {
+  if (amount >= 1_000_000_000) {
+    return `Rp ${(amount / 1_000_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+  } else if (amount >= 1_000_000) {
+    return `Rp ${(amount / 1_000_000).toFixed(1).replace(/\.0$/, "")}JT`;
+  } else if (amount >= 100_000) {
+    return `Rp ${(amount / 1_000).toFixed(1).replace(/\.0$/, "")}K`;
+  }
   return amount.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",

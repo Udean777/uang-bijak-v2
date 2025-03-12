@@ -13,6 +13,7 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Image } from "expo-image";
 import { UserType } from "@/types";
 import { Router } from "expo-router";
+import { BlurView } from "expo-blur";
 
 interface CustomTabBarProps extends BottomTabBarProps {
   isOpen: boolean;
@@ -123,7 +124,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
         </TouchableOpacity>
       </Animated.View>
 
-      <View style={styles.tabBar}>
+      <BlurView intensity={50} tint="light" style={styles.tabBar}>
         {state.routes.map((route, index) => {
           const isFocused = state.index === index;
 
@@ -152,7 +153,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({
             </TouchableOpacity>
           );
         })}
-      </View>
+      </BlurView>
     </View>
   );
 };
@@ -180,7 +181,6 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     width: "100%",
-    backdropFilter: "blur(10px)",
   },
   tabBarItem: {
     flex: 1,
